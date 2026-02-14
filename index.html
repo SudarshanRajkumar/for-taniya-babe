@@ -6,6 +6,8 @@
     <title>For Taniya 💌</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Quicksand:wght@400;500;600&family=Dancing+Script:wght@600&family=Caveat:wght@500&display=swap" rel="stylesheet">
+    <!-- YouTube API Script -->
+    <script src="https://www.youtube.com/iframe_api"></script>
     <style>
         body {
             font-family: 'Quicksand', sans-serif;
@@ -24,7 +26,7 @@
             min-height: -webkit-fill-available;
         }
 
-        /* Loader Styles - No Middle GIF, Only Emojis */
+        /* Loader Styles - Clean & Romantic (No Middle GIF) */
         #loading-screen {
             position: fixed;
             inset: 0;
@@ -120,6 +122,15 @@
             border: 2px solid #a78bfa;
         }
 
+        /* Hidden YouTube Player */
+        #yt-player-container {
+            position: absolute;
+            width: 0;
+            height: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
         .btn-pressed {
             transform: scale(0.92) translateY(2px) !important;
             box-shadow: inset 0 4px 8px rgba(0,0,0,0.1) !important;
@@ -167,7 +178,7 @@
             border-radius: 12px 12px 0 0;
         }
 
-        /* Memory Game Stats - Restore Previous Styling */
+        /* Memory Game Stats */
         .stat-box {
             background: white;
             padding: 1.2rem 2.2rem;
@@ -210,7 +221,10 @@
 </head>
 <body class="min-h-screen-ios flex flex-col items-center justify-center p-4 relative">
 
-    <audio id="bg-music" loop></audio>
+    <!-- HIDDEN YOUTUBE PLAYER CONTAINER -->
+    <div id="yt-player-container">
+        <div id="yt-player"></div>
+    </div>
 
     <!-- INITIAL LOADING SCREEN -->
     <div id="loading-screen">
@@ -267,9 +281,11 @@
     <div id="section-2" class="hidden-section text-center w-full px-4">
         <p class="script-font text-purple-400 text-xl mb-2 italic">Just because it felt right ✨</p>
         <h1 class="serif-font text-purple-600 text-5xl font-bold mb-12">A Little Note 💌</h1>
-        <div class="glass-card p-12 md:p-24 flex flex-col items-center justify-center max-w-4xl mx-auto">
+        <div class="glass-card p-12 md:p-24 flex flex-col items-center justify-center max-w-4xl mx-auto border-2 border-purple-50">
             <div class="envelope mb-12" onclick="showSection(3)"><div class="heart-seal text-2xl shadow-sm">❤️</div></div>
-            <button onclick="showSection(3)" class="bg-purple-100 text-purple-400 px-12 py-3 rounded-full text-sm font-bold border border-purple-200">A Note For You 💖</button>
+            <button onclick="showSection(3)" class="bg-purple-100 text-purple-400 px-12 py-3 rounded-full text-sm font-bold border border-purple-200 active:scale-95 transition-transform">
+                A Note For You 💖
+            </button>
         </div>
     </div>
 
@@ -298,31 +314,31 @@
         <p class="script-font text-purple-400 text-2xl mb-2 italic">songs you might like ✨</p>
         <h1 class="serif-font text-purple-600 text-5xl font-bold mb-12">Chill Zone 🎵</h1>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12 text-left">
-            <div class="glass-card p-6 flex items-center space-x-6 cursor-pointer hover:shadow-lg transition-all" onclick="playSong('You & I', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', this)">
+            <div class="glass-card p-6 flex items-center space-x-6 cursor-pointer hover:shadow-lg transition-all" onclick="playYouTube('8d2f-Y_mRAs', this)">
                 <div class="disc-logo flex-shrink-0"></div>
                 <div><h3 class="font-bold text-gray-800">You & I</h3><p class="text-gray-500 text-sm italic">Diego Gonzalez</p></div>
             </div>
-            <div class="glass-card p-6 flex items-center space-x-6 cursor-pointer hover:shadow-lg transition-all" onclick="playSong('P.S. I LOVE YOU', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', this)">
+            <div class="glass-card p-6 flex items-center space-x-6 cursor-pointer hover:shadow-lg transition-all" onclick="playYouTube('_j4qU4X9W0A', this)">
                 <div class="disc-logo flex-shrink-0"></div>
                 <div><h3 class="font-bold text-gray-800">P.S. I LOVE YOU</h3><p class="text-gray-500 text-sm italic">Paul Partohap</p></div>
             </div>
-            <div class="glass-card p-6 flex items-center space-x-6 cursor-pointer hover:shadow-lg transition-all" onclick="playSong('i know you know', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3', this)">
+            <div class="glass-card p-6 flex items-center space-x-6 cursor-pointer hover:shadow-lg transition-all" onclick="playYouTube('L_8Y0-kX5u0', this)">
                 <div class="disc-logo flex-shrink-0"></div>
                 <div><h3 class="font-bold text-gray-800">i know you know</h3><p class="text-gray-500 text-sm italic">CHSKA</p></div>
             </div>
-            <div class="glass-card p-6 flex items-center space-x-6 cursor-pointer hover:shadow-lg transition-all" onclick="playSong('U (You)', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3', this)">
+            <div class="glass-card p-6 flex items-center space-x-6 cursor-pointer hover:shadow-lg transition-all" onclick="playYouTube('GvP9V6H3T0I', this)">
                 <div class="disc-logo flex-shrink-0"></div>
                 <div><h3 class="font-bold text-gray-800">U (You)</h3><p class="text-gray-500 text-sm italic">KIDO3008</p></div>
             </div>
-            <div class="glass-card p-6 flex items-center space-x-6 cursor-pointer hover:shadow-lg transition-all" onclick="playSong('LIMBO', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3', this)">
+            <div class="glass-card p-6 flex items-center space-x-6 cursor-pointer hover:shadow-lg transition-all" onclick="playYouTube('vU6vN-p9U2w', this)">
                 <div class="disc-logo flex-shrink-0"></div>
                 <div><h3 class="font-bold text-gray-800">LIMBO</h3><p class="text-gray-500 text-sm italic">keshi</p></div>
             </div>
         </div>
-        <button onclick="showSection(5)" class="bg-purple-500 text-white font-bold py-4 px-16 rounded-2xl shadow-xl">Activities ✨</button>
+        <button onclick="showSection(5)" class="bg-purple-500 text-white font-bold py-4 px-16 rounded-2xl shadow-xl active:scale-95 transition-all">Activities ✨</button>
     </div>
 
-    <!-- SECTION 5: MEMORY MATCH - RESTORED PREVIOUS VERSION -->
+    <!-- SECTION 5: MEMORY MATCH -->
     <div id="section-5" class="hidden-section text-center w-full px-4">
         <p class="script-font text-purple-400 text-2xl mb-2 italic">A little fun break 💫</p>
         <h1 class="serif-font text-purple-600 text-5xl md:text-7xl mb-10 font-bold">Memory Match 💞</h1>
@@ -343,8 +359,8 @@
         </div>
 
         <div class="flex justify-center space-x-6">
-            <button onclick="resetGame()" class="bg-purple-100 text-purple-500 font-bold py-4 px-10 rounded-2xl hover:bg-purple-200 transition-all shadow-sm">Reset</button>
-            <button onclick="showSection(6)" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-4 px-12 rounded-2xl shadow-lg flex items-center space-x-2">
+            <button onclick="resetGame()" class="bg-purple-100 text-purple-500 font-bold py-4 px-10 rounded-2xl hover:bg-purple-200 transition-all shadow-sm active:scale-95">Reset</button>
+            <button onclick="showSection(6)" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-4 px-12 rounded-2xl shadow-lg flex items-center space-x-2 active:scale-95">
                 <span>Next ✨</span> <span class="text-xl">→</span>
             </button>
         </div>
@@ -404,8 +420,8 @@
     </div>
 
     <!-- Hidden Flow Sections -->
-    <div id="section-6" class="hidden-section text-center px-4 w-full"><h1 class="serif-font text-purple-600 text-6xl font-bold mb-12">Thoughts 💭</h1><button onclick="showSection(7)" class="bg-purple-500 text-white py-4 px-12 rounded-2xl shadow-xl">Moments ✨</button></div>
-    <div id="section-8" class="hidden-section text-center w-full px-4 max-w-6xl"><h1 class="serif-font text-purple-600 text-5xl md:text-6xl font-bold mb-12">Why You Matter 💞</h1><button onclick="showSection(9)" class="mt-16 bg-purple-500 text-white py-4 px-16 rounded-2xl shadow-2xl">Final Part 💌</button></div>
+    <div id="section-6" class="hidden-section text-center px-4 w-full"><h1 class="serif-font text-purple-600 text-6xl font-bold mb-12">Thoughts 💭</h1><button onclick="showSection(7)" class="bg-purple-500 text-white py-4 px-12 rounded-2xl shadow-xl active:scale-95 transition-all">Moments ✨</button></div>
+    <div id="section-8" class="hidden-section text-center w-full px-4 max-w-6xl"><h1 class="serif-font text-purple-600 text-5xl md:text-6xl font-bold mb-12">Why You Matter 💞</h1><button onclick="showSection(9)" class="mt-16 bg-purple-500 text-white py-4 px-16 rounded-2xl shadow-2xl active:scale-95 transition-all">Final Part 💌</button></div>
 
     <footer class="mt-24 text-purple-300 text-sm font-medium pb-12">Made with warmth, care, and a small spark ✨</footer>
 
@@ -421,19 +437,40 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // MUSIC Logic
-        const audio = document.getElementById('bg-music');
-        async function playSong(name, url, card) {
-            document.querySelectorAll('#section-4 .glass-card').forEach(c => c.classList.remove('playing'));
-            try {
-                if (audio.src === url && !audio.paused) {
-                    audio.pause();
-                } else {
-                    audio.src = url;
-                    await audio.play();
-                    card.classList.add('playing');
+        // YOUTUBE Logic
+        var ytPlayer;
+        var currentVideoId = '';
+        function onYouTubeIframeAPIReady() {
+            ytPlayer = new YT.Player('yt-player', {
+                height: '0',
+                width: '0',
+                videoId: '',
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0,
+                    'showinfo': 0,
+                    'rel': 0,
+                    'modestbranding': 1,
+                    'origin': window.location.origin
                 }
-            } catch (err) { console.log("Interaction needed"); }
+            });
+        }
+
+        function playYouTube(videoId, card) {
+            const allCards = document.querySelectorAll('#section-4 .glass-card');
+            const isPlaying = card.classList.contains('playing');
+            allCards.forEach(c => c.classList.remove('playing'));
+
+            if (isPlaying) {
+                ytPlayer.pauseVideo();
+            } else {
+                if (currentVideoId !== videoId) {
+                    ytPlayer.loadVideoById(videoId);
+                    currentVideoId = videoId;
+                }
+                ytPlayer.playVideo();
+                card.classList.add('playing');
+            }
         }
 
         // INITIALIZER Logic
@@ -441,7 +478,6 @@
             const heartContainer = document.getElementById('heart-container');
             const container = document.getElementById('sparkle-container');
             
-            // Moving love emojis for loader
             for(let i=0; i<20; i++) {
                 const heart = document.createElement('div');
                 heart.className = 'moving-heart';
@@ -450,6 +486,7 @@
                 heart.style.top = Math.random() * 100 + 'vh';
                 heart.style.setProperty('--tw-x', (Math.random() * 400 - 200) + 'px');
                 heart.style.setProperty('--tw-y', (Math.random() * 400 - 200) + 'px');
+                heart.style.animationDelay = (Math.random() * 2) + 's';
                 heartContainer.appendChild(heart);
             }
 
@@ -469,7 +506,7 @@
             setTimeout(() => { if(loader) { loader.style.opacity = '0'; setTimeout(() => { loader.style.display = 'none'; }, 800); } }, 3800);
         })();
 
-        // MEMORY MATCH Logic - REVERTED TO PREVIOUS VERSION
+        // MEMORY GAME Logic
         const emojis = ['💖', '❤️', '🌹', '💘', '💍', '💌'];
         let cards = [...emojis, ...emojis], flippedCards = [], matchedPairs = 0, moves = 0;
         function shuffle(a) { for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]} return a; }
