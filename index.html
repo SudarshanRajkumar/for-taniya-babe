@@ -19,13 +19,12 @@
         .script-font { font-family: 'Dancing Script', cursive; }
         .handwriting-font { font-family: 'Caveat', cursive; }
         
-        /* Mobile Viewport Fix */
         .min-h-screen-ios {
             min-height: 100vh;
             min-height: -webkit-fill-available;
         }
 
-        /* Loader Styles */
+        /* Loader Styles - No Middle GIF, Only Emojis */
         #loading-screen {
             position: fixed;
             inset: 0;
@@ -37,6 +36,19 @@
             z-index: 10000;
             transition: opacity 0.8s ease-in-out;
         }
+        .moving-heart {
+            position: absolute;
+            font-size: 1.5rem;
+            pointer-events: none;
+            z-index: 1;
+            animation: heartFloat 4s ease-in infinite;
+        }
+        @keyframes heartFloat {
+            0% { transform: translate(0, 0) scale(1); opacity: 0; }
+            20% { opacity: 0.8; }
+            100% { transform: translate(var(--tw-x), var(--tw-y)) scale(1.5); opacity: 0; }
+        }
+
         .progress-bar-bg {
             width: 220px;
             height: 8px;
@@ -44,6 +56,7 @@
             border-radius: 12px;
             overflow: hidden;
             margin-top: 25px;
+            z-index: 2;
         }
         .progress-bar-fill {
             width: 0%;
@@ -53,7 +66,7 @@
             transition: width 3.5s cubic-bezier(0.65, 0, 0.35, 1);
         }
 
-        /* Sidebar & Overlay Navigation */
+        /* Sidebar & Overlay */
         #sidebar-overlay {
             position: fixed;
             inset: 0;
@@ -76,28 +89,22 @@
             transform: translateX(100%);
             transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: -10px 0 40px rgba(0,0,0,0.1);
-            padding-top: env(safe-area-inset-top);
         }
         .sidebar-active #explore-sidebar { transform: translateX(0); }
         .sidebar-active #sidebar-overlay { display: block; opacity: 1; }
 
-        /* Floating Animation */
-        @keyframes float {
-            0% { transform: translateY(0px) rotate(0deg); opacity: 0.2; }
-            50% { transform: translateY(-20px) rotate(10deg); opacity: 0.4; }
-            100% { transform: translateY(0px) rotate(0deg); opacity: 0.2; }
-        }
-        .sparkle { position: absolute; pointer-events: none; animation: float 5s ease-in-out infinite; z-index: 0; }
-
-        /* Music Disc Logo */
+        /* Disc Animation */
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .disc-logo {
-            width: 50px;
-            height: 50px;
-            background: #222;
+            width: 55px;
+            height: 55px;
+            background: #1a1a1a;
             border-radius: 50%;
-            border: 4px solid #444;
+            border: 4px solid #333;
             position: relative;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .playing .disc-logo {
             animation: spin 4s linear infinite;
         }
         .disc-logo::after {
@@ -113,14 +120,12 @@
             border: 2px solid #a78bfa;
         }
 
-        /* Button "Pressed" Feedback */
         .btn-pressed {
             transform: scale(0.92) translateY(2px) !important;
             box-shadow: inset 0 4px 8px rgba(0,0,0,0.1) !important;
             background-color: #9333ea !important;
         }
 
-        /* Glass Cards */
         .glass-card {
             background: rgba(255, 245, 245, 0.75);
             backdrop-filter: blur(15px);
@@ -129,7 +134,17 @@
             border-radius: 2.5rem;
         }
 
-        /* Envelope */
+        .sparkle { position: absolute; pointer-events: none; animation: float 5s ease-in-out infinite; z-index: 0; }
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); opacity: 0.2; }
+            50% { transform: translateY(-20px) rotate(10deg); opacity: 0.4; }
+            100% { transform: translateY(0px) rotate(0deg); opacity: 0.2; }
+        }
+
+        .hidden-section { display: none; opacity: 0; }
+        .fade-in { animation: fadeIn 0.8s forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
         .envelope {
             position: relative;
             width: 280px;
@@ -141,7 +156,6 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: transform 0.3s ease;
         }
         .envelope::before {
             content: "";
@@ -153,19 +167,19 @@
             border-radius: 12px 12px 0 0;
         }
 
-        /* Memory Game Stats */
+        /* Memory Game Stats - Restore Previous Styling */
         .stat-box {
             background: white;
-            padding: 1rem;
+            padding: 1.2rem 2.2rem;
             border-radius: 1.5rem;
             box-shadow: 0 10px 25px rgba(167, 139, 250, 0.12);
             border: 2px solid #f3e8ff;
+            min-width: 140px;
             text-align: center;
-            min-width: 100px;
         }
         .memory-card {
-            width: 70px;
-            height: 90px;
+            width: 80px;
+            height: 100px;
             cursor: pointer;
             position: relative;
             transform-style: preserve-3d;
@@ -180,17 +194,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 12px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
-        .card-front { background-color: #a78bfa; color: white; font-size: 1.5rem; font-weight: bold; }
-        .card-back { background-color: #fff; transform: rotateY(180deg); font-size: 2rem; }
-
-        .hidden-section { display: none; opacity: 0; }
-        .fade-in { animation: fadeIn 0.8s forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .card-front { background-color: #a78bfa; color: white; font-size: 1.8rem; font-weight: bold; }
+        .card-back { background-color: #fff; transform: rotateY(180deg); font-size: 2.2rem; }
 
         @media (max-width: 640px) {
-            .memory-card { width: 60px; height: 80px; }
+            .memory-card { width: 65px; height: 85px; }
+            .stat-box { min-width: 110px; padding: 1rem; }
             .envelope { width: 240px; height: 160px; }
             .envelope::before { border-left-width: 120px; border-right-width: 120px; border-top-width: 80px; }
         }
@@ -198,14 +210,13 @@
 </head>
 <body class="min-h-screen-ios flex flex-col items-center justify-center p-4 relative">
 
+    <audio id="bg-music" loop></audio>
+
     <!-- INITIAL LOADING SCREEN -->
     <div id="loading-screen">
-        <div class="relative mb-6">
-            <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z6c2xudGR6Z2R6ZGR6ZGR6ZGR6ZGR6ZGR6ZGR6ZGR6ZGR6ZGR6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/06mX8IqV0MvS9P6V6E/giphy.gif" alt="Preparing" class="w-32 h-32 md:w-44 md:h-44 object-contain">
-            <div class="absolute -top-4 left-1/2 -translate-x-1/2 text-pink-400 text-3xl animate-bounce">❤️</div>
-        </div>
-        <h2 class="serif-font text-purple-600 text-2xl md:text-3xl font-bold mb-2 text-center">Something Special ✨</h2>
-        <p class="text-purple-400 text-sm font-medium italic text-center px-4">is being prepared for you... 💫</p>
+        <div id="heart-container" class="absolute inset-0 overflow-hidden pointer-events-none"></div>
+        <h2 class="serif-font text-purple-600 text-2xl md:text-3xl font-bold mb-2 text-center z-10">Something Special ✨</h2>
+        <p class="text-purple-400 text-sm font-medium italic text-center px-4 z-10">is being prepared for you... 💫</p>
         <div class="progress-bar-bg">
             <div id="loading-bar" class="progress-bar-fill"></div>
         </div>
@@ -213,34 +224,18 @@
 
     <!-- SIDEBAR & OVERLAY -->
     <div id="sidebar-overlay" onclick="toggleSidebar()"></div>
-    <div id="explore-sidebar" class="flex flex-col p-6 md:p-8">
-        <h2 class="serif-font italic text-purple-600 text-3xl mb-10 mt-10 text-center">Explore</h2>
+    <div id="explore-sidebar" class="flex flex-col p-8">
+        <h2 class="serif-font italic text-purple-600 text-3xl mb-8 mt-12 text-center">Explore</h2>
         <div class="flex-1 space-y-3 overflow-y-auto pr-2">
-            <button onclick="showSection(1); toggleSidebar();" class="w-full flex items-center space-x-4 p-4 rounded-2xl hover:bg-purple-50 transition-all text-purple-600 font-medium active:scale-95">
-                <span>✨</span> <span>Start</span>
-            </button>
-            <button onclick="showSection(5); toggleSidebar();" class="w-full flex items-center justify-between p-4 rounded-2xl bg-gradient-to-r from-purple-400 to-purple-500 text-white font-medium shadow-md transition-all active:scale-95">
-                <div class="flex items-center space-x-4"><span>🎭</span> <span>Activities</span></div><span>→</span>
-            </button>
-            <button onclick="showSection(4); toggleSidebar();" class="w-full flex items-center space-x-4 p-4 rounded-2xl hover:bg-purple-50 transition-all text-purple-600 font-medium active:scale-95">
-                <span>🎵</span> <span>Chill Zone</span>
-            </button>
-            <button onclick="showSection(5); toggleSidebar();" class="w-full flex items-center space-x-4 p-4 rounded-2xl hover:bg-purple-50 transition-all text-purple-600 font-medium active:scale-95">
-                <span>🧠</span> <span>Memory Game</span>
-            </button>
-            <button onclick="showSection(7); toggleSidebar();" class="w-full flex items-center space-x-4 p-4 rounded-2xl hover:bg-purple-50 transition-all text-purple-600 font-medium active:scale-95">
-                <span>📸</span> <span>Moments</span>
-            </button>
-            <button onclick="showSection(8); toggleSidebar();" class="w-full flex items-center space-x-4 p-4 rounded-2xl hover:bg-purple-50 transition-all text-purple-600 font-medium active:scale-95">
-                <span>💖</span> <span>Why Special</span>
-            </button>
-            <button onclick="showSection(9); toggleSidebar();" class="w-full flex items-center space-x-4 p-4 rounded-2xl hover:bg-purple-50 transition-all text-purple-600 font-medium border-2 border-purple-200 bg-purple-50 active:scale-95">
-                <span>💌</span> <span>Letter</span>
-            </button>
+            <button onclick="showSection(1); toggleSidebar();" class="w-full flex items-center space-x-4 p-4 rounded-2xl hover:bg-purple-50 transition-all text-purple-600 font-medium active:scale-95"><span>✨</span> <span>Start</span></button>
+            <button onclick="showSection(5); toggleSidebar();" class="w-full flex items-center justify-between p-4 rounded-2xl bg-gradient-to-r from-purple-400 to-purple-500 text-white font-medium shadow-md transition-all active:scale-95"><div class="flex items-center space-x-4"><span>🎭</span> <span>Activities</span></div><span>→</span></button>
+            <button onclick="showSection(4); toggleSidebar();" class="w-full flex items-center space-x-4 p-4 rounded-2xl hover:bg-purple-50 transition-all text-purple-600 font-medium active:scale-95"><span>🎵</span> <span>Chill Zone</span></button>
+            <button onclick="showSection(5); toggleSidebar();" class="w-full flex items-center space-x-4 p-4 rounded-2xl hover:bg-purple-50 transition-all text-purple-600 font-medium active:scale-95"><span>🧠</span> <span>Memory Game</span></button>
+            <button onclick="showSection(7); toggleSidebar();" class="w-full flex items-center space-x-4 p-4 rounded-2xl hover:bg-purple-50 transition-all text-purple-600 font-medium active:scale-95"><span>📸</span> <span>Moments</span></button>
+            <button onclick="showSection(8); toggleSidebar();" class="w-full flex items-center space-x-4 p-4 rounded-2xl hover:bg-purple-50 transition-all text-purple-600 font-medium active:scale-95"><span>💖</span> <span>Why Special</span></button>
+            <button onclick="showSection(9); toggleSidebar();" class="w-full flex items-center space-x-4 p-4 rounded-2xl hover:bg-purple-50 transition-all text-purple-600 font-medium border-2 border-purple-200 bg-purple-50 active:scale-95"><span>💌</span> <span>Letter</span></button>
         </div>
-        <div class="bg-pink-50 p-5 rounded-3xl text-center mt-6">
-            <p class="script-font text-pink-400 text-lg">Made with care for you 💞</p>
-        </div>
+        <div class="bg-pink-50 p-5 rounded-3xl text-center mt-6"><p class="script-font text-pink-400 text-lg">Made with care for you 💞</p></div>
     </div>
 
     <!-- MAIN EXPLORE BUTTON -->
@@ -257,13 +252,9 @@
         <p class="script-font text-purple-400 text-2xl mb-4 italic">Hey, I made something for you... ✨</p>
         <h1 class="serif-font text-purple-600 text-4xl md:text-7xl mb-12 font-bold leading-tight">See what I have made for <br class="hidden md:block"> you 💌</h1>
         <div class="relative glass-card p-10 md:p-16">
-            <div class="absolute top-4 left-6 flex space-x-2">
-                <div class="w-3 h-3 rounded-full bg-red-400"></div>
-                <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
-                <div class="w-3 h-3 rounded-full bg-green-400"></div>
-            </div>
-            <div class="space-y-6">
-                <p class="text-gray-500 text-lg font-medium italic">Just a few thoughts, and a little question at the end. 💫</p>
+            <div class="absolute top-4 left-6 flex space-x-2"><div class="w-3 h-3 rounded-full bg-red-400"></div><div class="w-3 h-3 rounded-full bg-yellow-400"></div><div class="w-3 h-3 rounded-full bg-green-400"></div></div>
+            <div class="space-y-6 py-4">
+                <p class="text-gray-500 text-lg font-medium">Just a few thoughts, and a little question at the end. 💫</p>
                 <p class="text-purple-500 font-semibold text-lg">Tap below when you're ready 💖</p>
                 <button onclick="showSection(2)" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-4 px-12 rounded-2xl shadow-xl transition-all transform active:scale-95 flex items-center mx-auto space-x-2">
                     <span>Open This 💞</span> <span class="text-xl">→</span>
@@ -276,13 +267,9 @@
     <div id="section-2" class="hidden-section text-center w-full px-4">
         <p class="script-font text-purple-400 text-xl mb-2 italic">Just because it felt right ✨</p>
         <h1 class="serif-font text-purple-600 text-5xl font-bold mb-12">A Little Note 💌</h1>
-        <div class="glass-card p-12 md:p-24 flex flex-col items-center justify-center max-w-4xl mx-auto border-2 border-purple-50">
-            <div class="envelope mb-12" onclick="showSection(3)">
-                <div class="heart-seal text-2xl shadow-sm">❤️</div>
-            </div>
-            <button onclick="showSection(3)" class="bg-purple-100 text-purple-400 px-12 py-3 rounded-full text-sm font-bold border border-purple-200 active:scale-95 transition-transform">
-                A Note For You 💖
-            </button>
+        <div class="glass-card p-12 md:p-24 flex flex-col items-center justify-center max-w-4xl mx-auto">
+            <div class="envelope mb-12" onclick="showSection(3)"><div class="heart-seal text-2xl shadow-sm">❤️</div></div>
+            <button onclick="showSection(3)" class="bg-purple-100 text-purple-400 px-12 py-3 rounded-full text-sm font-bold border border-purple-200">A Note For You 💖</button>
         </div>
     </div>
 
@@ -291,7 +278,6 @@
         <p class="script-font text-purple-400 text-xl mb-2 italic">Just because it felt right ✨</p>
         <h1 class="serif-font text-purple-600 text-5xl font-bold mb-10 md:mb-12">A Little Note 💌</h1>
         <div class="glass-card p-8 md:p-16 relative text-left max-w-4xl mx-auto overflow-visible">
-            <!-- Removed the broken/flashing GIF as requested -->
             <div class="space-y-6">
                 <h2 class="serif-font text-purple-600 text-3xl md:text-4xl font-bold border-b-2 border-purple-100 pb-3">Hey Taniya 💖</h2>
                 <div class="handwriting-font text-2xl md:text-3xl text-gray-700 leading-relaxed italic space-y-4">
@@ -312,48 +298,77 @@
         <p class="script-font text-purple-400 text-2xl mb-2 italic">songs you might like ✨</p>
         <h1 class="serif-font text-purple-600 text-5xl font-bold mb-12">Chill Zone 🎵</h1>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12 text-left">
-            <div class="glass-card p-6 flex items-center space-x-6"><div class="disc-logo flex-shrink-0"></div><div><h3 class="font-bold">You & I</h3><p class="text-gray-500 text-sm italic">Diego Gonzalez</p></div></div>
-            <div class="glass-card p-6 flex items-center space-x-6"><div class="disc-logo flex-shrink-0"></div><div><h3 class="font-bold">P.S. I LOVE YOU</h3><p class="text-gray-500 text-sm italic">Paul Partohap</p></div></div>
-            <div class="glass-card p-6 flex items-center space-x-6"><div class="disc-logo flex-shrink-0"></div><div><h3 class="font-bold">i know you know</h3><p class="text-gray-500 text-sm italic">CHSKA</p></div></div>
-            <div class="glass-card p-6 flex items-center space-x-6"><div class="disc-logo flex-shrink-0"></div><div><h3 class="font-bold">U (You)</h3><p class="text-gray-500 text-sm italic">KIDO3008</p></div></div>
-            <div class="glass-card p-6 flex items-center space-x-6"><div class="disc-logo flex-shrink-0"></div><div><h3 class="font-bold">LIMBO</h3><p class="text-gray-500 text-sm italic">keshi</p></div></div>
+            <div class="glass-card p-6 flex items-center space-x-6 cursor-pointer hover:shadow-lg transition-all" onclick="playSong('You & I', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', this)">
+                <div class="disc-logo flex-shrink-0"></div>
+                <div><h3 class="font-bold text-gray-800">You & I</h3><p class="text-gray-500 text-sm italic">Diego Gonzalez</p></div>
+            </div>
+            <div class="glass-card p-6 flex items-center space-x-6 cursor-pointer hover:shadow-lg transition-all" onclick="playSong('P.S. I LOVE YOU', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', this)">
+                <div class="disc-logo flex-shrink-0"></div>
+                <div><h3 class="font-bold text-gray-800">P.S. I LOVE YOU</h3><p class="text-gray-500 text-sm italic">Paul Partohap</p></div>
+            </div>
+            <div class="glass-card p-6 flex items-center space-x-6 cursor-pointer hover:shadow-lg transition-all" onclick="playSong('i know you know', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3', this)">
+                <div class="disc-logo flex-shrink-0"></div>
+                <div><h3 class="font-bold text-gray-800">i know you know</h3><p class="text-gray-500 text-sm italic">CHSKA</p></div>
+            </div>
+            <div class="glass-card p-6 flex items-center space-x-6 cursor-pointer hover:shadow-lg transition-all" onclick="playSong('U (You)', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3', this)">
+                <div class="disc-logo flex-shrink-0"></div>
+                <div><h3 class="font-bold text-gray-800">U (You)</h3><p class="text-gray-500 text-sm italic">KIDO3008</p></div>
+            </div>
+            <div class="glass-card p-6 flex items-center space-x-6 cursor-pointer hover:shadow-lg transition-all" onclick="playSong('LIMBO', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3', this)">
+                <div class="disc-logo flex-shrink-0"></div>
+                <div><h3 class="font-bold text-gray-800">LIMBO</h3><p class="text-gray-500 text-sm italic">keshi</p></div>
+            </div>
         </div>
-        <button onclick="showSection(5)" class="bg-purple-500 text-white font-bold py-4 px-16 rounded-2xl shadow-xl transition-all active:scale-95">Memory Game ✨</button>
+        <button onclick="showSection(5)" class="bg-purple-500 text-white font-bold py-4 px-16 rounded-2xl shadow-xl">Activities ✨</button>
     </div>
 
-    <!-- SECTION 5: MEMORY MATCH -->
+    <!-- SECTION 5: MEMORY MATCH - RESTORED PREVIOUS VERSION -->
     <div id="section-5" class="hidden-section text-center w-full px-4">
-        <h1 class="serif-font text-purple-600 text-5xl font-bold mb-10">Memory Match 💞</h1>
-        <div class="flex justify-center space-x-4 md:space-x-12 mb-10 max-w-2xl mx-auto">
-            <div class="stat-box"><p class="text-gray-400 text-xs uppercase font-bold mb-1">Moves</p><p id="moves-count" class="text-purple-600 text-4xl font-black">0</p></div>
-            <div class="stat-box"><p class="text-gray-400 text-xs uppercase font-bold mb-1">Matched</p><p id="matched-count" class="text-purple-600 text-4xl font-black">0/6</p></div>
+        <p class="script-font text-purple-400 text-2xl mb-2 italic">A little fun break 💫</p>
+        <h1 class="serif-font text-purple-600 text-5xl md:text-7xl mb-10 font-bold">Memory Match 💞</h1>
+        
+        <div class="flex justify-center space-x-6 md:space-x-10 mb-12">
+            <div class="stat-box">
+                <p class="text-gray-400 text-xs uppercase font-bold tracking-widest mb-2">Moves</p>
+                <p id="moves-count" class="text-purple-600 text-5xl font-black">0</p>
+            </div>
+            <div class="stat-box">
+                <p class="text-gray-400 text-xs uppercase font-bold tracking-widest mb-2">Matched</p>
+                <p id="matched-count" class="text-purple-600 text-5xl font-black">0/6</p>
+            </div>
         </div>
-        <div class="glass-card p-6 md:p-12 mb-10 max-w-4xl mx-auto"><div id="memory-grid" class="grid grid-cols-3 sm:grid-cols-6 gap-3 md:gap-4 justify-items-center"></div></div>
-        <div class="flex justify-center space-x-4">
-            <button onclick="resetGame()" class="bg-purple-100 text-purple-500 font-bold py-4 px-10 rounded-2xl active:scale-95 transition-transform">Reset</button>
-            <button onclick="showSection(6)" class="bg-purple-500 text-white font-bold py-4 px-10 rounded-2xl shadow-lg active:scale-95 transition-transform">Next ✨</button>
+
+        <div class="glass-card p-6 md:p-12 mb-10 max-w-4xl mx-auto shadow-2xl border-white/40">
+            <div id="memory-grid" class="grid grid-cols-3 sm:grid-cols-6 gap-3 md:gap-4 justify-items-center"></div>
+        </div>
+
+        <div class="flex justify-center space-x-6">
+            <button onclick="resetGame()" class="bg-purple-100 text-purple-500 font-bold py-4 px-10 rounded-2xl hover:bg-purple-200 transition-all shadow-sm">Reset</button>
+            <button onclick="showSection(6)" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-4 px-12 rounded-2xl shadow-lg flex items-center space-x-2">
+                <span>Next ✨</span> <span class="text-xl">→</span>
+            </button>
         </div>
     </div>
 
     <!-- SECTION 7: MOMENTS TOGETHER -->
-    <div id="section-7" class="hidden-section text-center w-full px-4 max-w-4xl">
+    <div id="section-7" class="hidden-section text-center w-full px-4 max-w-5xl mx-auto">
         <h1 class="serif-font text-purple-600 text-5xl font-bold mb-10">Moments Together 🎥</h1>
-        <div class="space-y-8">
-            <div class="glass-card p-4 md:p-8 shadow-2xl">
-                <video class="w-full rounded-3xl" controls>
+        <div class="flex flex-col items-center space-y-12 w-full">
+            <div class="glass-card p-4 md:p-8 shadow-2xl w-full max-w-[800px] flex justify-center items-center overflow-hidden">
+                <video class="w-full h-auto rounded-3xl object-contain shadow-inner" controls>
                     <source src="LOVE FULL.mp4" type="video/mp4">
                 </video>
             </div>
-            <div class="glass-card p-4 md:p-8 shadow-2xl">
-                <video class="w-full rounded-3xl" controls>
+            <div class="glass-card p-4 md:p-8 shadow-2xl w-full max-w-[800px] flex justify-center items-center overflow-hidden">
+                <video class="w-full h-auto rounded-3xl object-contain shadow-inner" controls>
                     <source src="love dinner.mp4" type="video/mp4">
                 </video>
             </div>
         </div>
-        <button onclick="showSection(8)" class="mt-10 bg-purple-500 text-white py-4 px-12 rounded-2xl shadow-lg active:scale-95 transition-all">Next Part ✨</button>
+        <button onclick="showSection(8)" class="mt-12 bg-purple-500 text-white py-4 px-12 rounded-2xl shadow-lg active:scale-95 transition-all">Next Part ✨</button>
     </div>
 
-    <!-- SECTION 9: PROPOSAL (Grand Finale) -->
+    <!-- SECTION 9: PROPOSAL -->
     <div id="section-9" class="hidden-section text-center w-full px-4">
         <p class="script-font text-purple-400 text-xl mb-2 italic">the grand finale... ✨</p>
         <h1 class="serif-font text-purple-600 text-5xl md:text-7xl mb-12 font-bold">One Last Thought 💌</h1>
@@ -381,14 +396,14 @@
 
             <div id="success-message" class="hidden absolute inset-0 bg-white/98 z-50 flex flex-col items-center justify-center text-center p-8 backdrop-blur-md">
                 <div class="text-9xl mb-12 animate-bounce">💖</div>
-                <h2 class="serif-font text-purple-600 text-5xl md:text-7xl font-bold">I love you forever and ever</h2>
+                <h2 class="serif-font text-purple-600 text-3xl md:text-5xl lg:text-6xl font-bold text-center">I love you forever and ever</h2>
                 <p class="script-font text-4xl text-purple-400 mt-8">Always Yours Yambung ✨</p>
                 <button onclick="location.reload()" class="mt-20 text-gray-400 text-sm underline tracking-widest uppercase hover:text-purple-400 transition-colors">Start Over ✨</button>
             </div>
         </div>
     </div>
 
-    <!-- Placeholder Sections -->
+    <!-- Hidden Flow Sections -->
     <div id="section-6" class="hidden-section text-center px-4 w-full"><h1 class="serif-font text-purple-600 text-6xl font-bold mb-12">Thoughts 💭</h1><button onclick="showSection(7)" class="bg-purple-500 text-white py-4 px-12 rounded-2xl shadow-xl">Moments ✨</button></div>
     <div id="section-8" class="hidden-section text-center w-full px-4 max-w-6xl"><h1 class="serif-font text-purple-600 text-5xl md:text-6xl font-bold mb-12">Why You Matter 💞</h1><button onclick="showSection(9)" class="mt-16 bg-purple-500 text-white py-4 px-16 rounded-2xl shadow-2xl">Final Part 💌</button></div>
 
@@ -397,21 +412,47 @@
     <script>
         // NAVIGATION Logic
         function toggleSidebar() { document.body.classList.toggle('sidebar-active'); }
-        
         function showSection(num) {
             document.querySelectorAll('[id^="section-"]').forEach(s => { s.style.display = 'none'; s.classList.remove('fade-in'); });
             const target = document.getElementById('section-' + num);
             if(target) { target.style.display = 'block'; setTimeout(() => target.classList.add('fade-in'), 10); }
-            
             document.querySelectorAll('video').forEach(v => v.pause());
-            
             if(num === 5) resetGame();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        // MUSIC Logic
+        const audio = document.getElementById('bg-music');
+        async function playSong(name, url, card) {
+            document.querySelectorAll('#section-4 .glass-card').forEach(c => c.classList.remove('playing'));
+            try {
+                if (audio.src === url && !audio.paused) {
+                    audio.pause();
+                } else {
+                    audio.src = url;
+                    await audio.play();
+                    card.classList.add('playing');
+                }
+            } catch (err) { console.log("Interaction needed"); }
+        }
+
         // INITIALIZER Logic
         (function init() {
+            const heartContainer = document.getElementById('heart-container');
             const container = document.getElementById('sparkle-container');
+            
+            // Moving love emojis for loader
+            for(let i=0; i<20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'moving-heart';
+                heart.innerText = '💖';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = Math.random() * 100 + 'vh';
+                heart.style.setProperty('--tw-x', (Math.random() * 400 - 200) + 'px');
+                heart.style.setProperty('--tw-y', (Math.random() * 400 - 200) + 'px');
+                heartContainer.appendChild(heart);
+            }
+
             const icons = ['✨', '💖', '💜', '🌸'];
             for (let i = 0; i < 25; i++) {
                 const s = document.createElement('div');
@@ -421,13 +462,14 @@
                 s.style.animationDelay = (Math.random() * 5) + 's';
                 container.appendChild(s);
             }
+            
             const bar = document.getElementById('loading-bar');
             const loader = document.getElementById('loading-screen');
             setTimeout(() => { if(bar) bar.style.width = '100%'; }, 50);
             setTimeout(() => { if(loader) { loader.style.opacity = '0'; setTimeout(() => { loader.style.display = 'none'; }, 800); } }, 3800);
         })();
 
-        // MEMORY GAME Logic
+        // MEMORY MATCH Logic - REVERTED TO PREVIOUS VERSION
         const emojis = ['💖', '❤️', '🌹', '💘', '💍', '💌'];
         let cards = [...emojis, ...emojis], flippedCards = [], matchedPairs = 0, moves = 0;
         function shuffle(a) { for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]} return a; }
